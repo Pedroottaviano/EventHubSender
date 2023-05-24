@@ -1,2 +1,2 @@
 # eventhub-service
-Spring boot service for event hub consumer.
+Spring boot service for event hub message sender.
