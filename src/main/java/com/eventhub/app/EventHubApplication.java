@@ -4,28 +4,15 @@ import com.azure.messaging.eventhubs.EventData;
 import com.azure.messaging.eventhubs.EventDataBatch;
 import com.azure.messaging.eventhubs.EventHubClientBuilder;
 import com.azure.messaging.eventhubs.EventHubProducerClient;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactor.core.publisher.Flux;
 
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.function.Function;
 
 public class EventHubApplication {
-	private EventHubProducerClient producer;
+	public static void main(String[] args) {
 
-	public static void main(String[] args) throws JsonProcessingException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		final String connectionString = "Endpoint=sb://oeegoldengate-uw-ehns-q.servicebus.windows.net/;SharedAccessKeyName=writing;SharedAccessKey=LCqqs/mJOA/M9cJGC8oG2I3grG612dP6a+AEhLltMr4=;EntityPath=patrondb-uw-eh-q";
-		final String eventHubName = "patrondb-uw-eh-q";
+		final String connectionString = "Endpoint=sb://pedro-namespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=tTG2DnhO+qgd9RdsT/BgmZ0aTNHtPe87Z+AEhPsMfQk=";
+		final String eventHubName = "pedro-event-hub";
 
 		GoldenGateEvent testedEvent1 = new GoldenGateEvent();
 		GoldenGateEvent testedEvent2 = new GoldenGateEvent();
@@ -53,7 +40,7 @@ public class EventHubApplication {
 
 		// prepare a batch of events to send to the event hub
 		EventDataBatch batch = producer.createBatch();
-		batch.tryAdd(new EventData(objectMapper.writeValueAsString(testedEvent1)));
+		batch.tryAdd(new EventData(testedEvent1.toString()));
 		batch.tryAdd(new EventData(testedEvent2.toString()));
 		batch.tryAdd(new EventData("Third event"));
 		batch.tryAdd(new EventData("Fourth event"));
